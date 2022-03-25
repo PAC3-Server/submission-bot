@@ -47,10 +47,6 @@ export default class SubmitCommand extends SlashCommand {
   }
 
   async run(ctx: CommandContext) {
-    if (Object.keys(ctx.options).length === 0) {
-      return EphemeralResponse('Please specify at least an URL or File!');
-    }
-    console.log(ctx.options);
     let uris: string = '';
     let extra: string = undefined;
     if (ctx.options.url) {
