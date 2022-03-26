@@ -12,7 +12,7 @@ export default class RemoveRightClickCommand extends SlashCommand {
   async run(ctx: CommandContext) {
     const message = ctx.targetMessage;
     const allowed =
-      hasPermissions(ctx, Permissions.MANAGE_MESSAGES) || ctx.user.id === (message.mentions as object)[0].id; // object until upstream is fixed
+      hasPermissions(ctx, Permissions.MANAGE_MESSAGES) || ctx.user.id === (message.mentions as object)[0]?.id; // object until upstream is fixed
     if (allowed) {
       await discord.deleteMessage(CHANNEL, message.id);
       return EphemeralResponse("Ok, I've removed that submission.");
