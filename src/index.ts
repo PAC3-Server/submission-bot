@@ -28,5 +28,6 @@ creator.on('commandRegister', (command) => logger.info(`Registered command ${com
 creator.on('commandError', (command, error) => logger.error(`Command ${command.commandName}:`, error));
 
 creator.withServer(new FastifyServer()).registerCommandsIn(path.join(__dirname, 'commands')).startServer();
+creator.syncCommands();
 
 console.log(`Starting server at "localhost:${creator.options.serverPort}/interactions"`);
