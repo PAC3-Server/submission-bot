@@ -1,5 +1,5 @@
 import { SlashCommand, SlashCreator, CommandContext, CommandOptionType } from 'slash-create';
-import { hasPermissions } from '../util';
+import { EphemeralResponse, hasPermissions, Permissions } from '../util';
 
 export default class SetCommand extends SlashCommand {
   constructor(creator: SlashCreator) {
@@ -39,9 +39,9 @@ export default class SetCommand extends SlashCommand {
   }
 
   async run(ctx: CommandContext) {
-    if (!hasPermissions(ctx)) {
-      return { content: "You don't have access to that command, sorry...", ephemeral: true };
+    if (!hasPermissions(ctx, Permissions.MANAGE_CHANNELS)) {
+      return EphemeralResponse("You don't have access to that command, sorry...");
     }
-    return { content: 'sorry, not implemented yet...' };
+    return EphemeralResponse('sorry, not implemented yet...');
   }
 }
