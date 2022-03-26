@@ -9,7 +9,7 @@ import {
   DiscordHTTPError
 } from 'slash-create';
 
-import { client, EphemeralResponse } from '../util';
+import { discord, EphemeralResponse } from '../util';
 
 const ALLOWED_MEDIA_TYPES = [
   'video/mp4',
@@ -99,10 +99,10 @@ export default class SubmitCommand extends SlashCommand {
           return;
         }
         try {
-          await client.createMessage(
-            process.env.SUBMISSION_CHANNEL,
-            this.CreateSubmissionMessage(ctx, `${mctx.values.descr.replace(/^\s+|\s+$/g, '')}\n${uris}`)
-          ); // todo make the channel non-static
+          await discord.createMessage(process.env.SUBMISSION_CHANNEL, {
+            content: this.CreateSubmissionMessage(ctx, `${mctx.values.descr.replace(/^\s+|\s+$/g, '')}\n${uris}`),
+            allowedMentions: { parse: ['users'] }
+          }); // todo make the channel non-static
           mctx.send(EphemeralResponse(`Submission sent!\n${extra ?? ''}`));
         } catch (ex) {
           const error = ex as DiscordHTTPError;
