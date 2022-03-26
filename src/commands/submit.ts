@@ -49,6 +49,8 @@ export default class SubmitCommand extends SlashCommand {
   async run(ctx: CommandContext) {
     let uris: string = '';
     let extra: string = undefined;
+    const no_extra = Object.keys(ctx.options).length === 0;
+
     if (ctx.options.url) {
       const isUrl = ctx.options.url.match(/^https?:\/\/.+\..+$/g);
       if (!isUrl) return EphemeralResponse("This doesn't seem to be a valid URL...");
@@ -92,6 +94,10 @@ export default class SubmitCommand extends SlashCommand {
         ]
       },
       async (mctx) => {
+        if (no_extra && !mctx.values.descr.match(/https?:\/\/.+\..+/g)) {
+          mctx.send(EphemeralResponse('Please provide at least an URL!')); // todo: add a setting for this?
+          return;
+        }
         try {
           await client.createMessage(
             process.env.SUBMISSION_CHANNEL,
@@ -99,34 +105,28 @@ export default class SubmitCommand extends SlashCommand {
           ); // todo make the channel non-static
           mctx.send(EphemeralResponse(`Submission sent!\n${extra ?? ''}`));
         } catch (ex) {
-          if (ex instanceof DiscordHTTPError) {
-            switch (ex.code) {
-              case 10003:
-                mctx.send(
-                  EphemeralResponse(
-                    'Oh No! looks like the Server Admins forgot to set the Submission Channel, tell them about this!'
-                  )
-                );
-                break;
-              case 50013:
-                mctx.send(
-                  EphemeralResponse(
-                    "Oh No! looks like I can't send messages to the Submission Channel, tell the Server Admins about this!"
-                  )
-                );
-                break;
-              default: {
-                console.error(ex);
-                mctx.send(
-                  EphemeralResponse('Oh No! Something went wrong while sending your Submission, please try again.')
-                );
-              }
+          const error = ex as DiscordHTTPError;
+          switch (error.code) {
+            case 10003:
+              mctx.send(
+                EphemeralResponse(
+                  'Oh No! looks like the Server Admins forgot to set the Submission Channel, tell them about this!'
+                )
+              );
+              break;
+            case 50013:
+              mctx.send(
+                EphemeralResponse(
+                  "Oh No! looks like I can't send messages to the Submission Channel, tell the Server Admins about this!"
+                )
+              );
+              break;
+            default: {
+              console.error(ex);
+              mctx.send(
+                EphemeralResponse('Oh No! Something went wrong while sending your Submission, please try again.')
+              );
             }
-          } else {
-            console.error(ex);
-            mctx.send(
-              EphemeralResponse('Oh No! Something went wrong while sending your Submission. Please try again later...')
-            );
           }
         }
       }
