@@ -1,5 +1,5 @@
 import { DiscordAbortCodes } from 'detritus-client-rest/lib/constants';
-import { ApplicationCommandType, CommandContext, SlashCommand, SlashCreator } from 'slash-create';
+import { ApplicationCommandType, CommandContext, SlashCommand, SlashCreator, User } from 'slash-create';
 import { discord, EphemeralResponse, hasPermissions, Permissions } from '../util';
 
 const CHANNEL = process.env.SUBMISSION_CHANNEL; // todo: make this non static
@@ -12,6 +12,8 @@ export default class RemoveRightClickCommand extends SlashCommand {
   }
   async run(ctx: CommandContext) {
     const message = ctx.targetMessage;
+    if (message.channelID !== CHANNEL)
+      return EphemeralResponse(`I can only remove messages from the <#${CHANNEL}> channel...`);
     const allowed = hasPermissions(ctx, Permissions.MANAGE_MESSAGES) || ctx.user.id === message.mentions[0]?.id;
     if (allowed) {
       try {
