@@ -47,7 +47,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint-plugin-prettier", "virtual:0d3154367c58953967d01ca98fe0850cb7060cd4504298278449ee848b87bd218d3dfb495ae56cdfba1b48a94b400ffc3c734e96121f1e77b0a1ff38578e6c90#npm:4.0.0"],\
             ["fastify", "npm:3.27.4"],\
             ["prettier", "npm:2.6.1"],\
-            ["slash-create", "virtual:0d3154367c58953967d01ca98fe0850cb7060cd4504298278449ee848b87bd218d3dfb495ae56cdfba1b48a94b400ffc3c734e96121f1e77b0a1ff38578e6c90#npm:5.3.0"],\
+            ["slash-create", "virtual:0d3154367c58953967d01ca98fe0850cb7060cd4504298278449ee848b87bd218d3dfb495ae56cdfba1b48a94b400ffc3c734e96121f1e77b0a1ff38578e6c90#npm:5.4.1"],\
             ["slash-up", "npm:1.0.11"],\
             ["ts-node", "virtual:0d3154367c58953967d01ca98fe0850cb7060cd4504298278449ee848b87bd218d3dfb495ae56cdfba1b48a94b400ffc3c734e96121f1e77b0a1ff38578e6c90#npm:10.7.0"],\
             ["typescript", "patch:typescript@npm%3A4.6.3#~builtin<compat/typescript>::version=4.6.3&hash=bda367"]\
@@ -2263,10 +2263,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:0d3154367c58953967d01ca98fe0850cb7060cd4504298278449ee848b87bd218d3dfb495ae56cdfba1b48a94b400ffc3c734e96121f1e77b0a1ff38578e6c90#npm:5.3.0", {\
-          "packageLocation": "./.yarn/__virtual__/slash-create-virtual-055c84ed28/0/cache/slash-create-npm-5.3.0-7456104167-110774dba0.zip/node_modules/slash-create/",\
+        ["npm:5.4.1", {\
+          "packageLocation": "./.yarn/cache/slash-create-npm-5.4.1-3d99dd3261-3de8fc57c7.zip/node_modules/slash-create/",\
           "packageDependencies": [\
-            ["slash-create", "virtual:0d3154367c58953967d01ca98fe0850cb7060cd4504298278449ee848b87bd218d3dfb495ae56cdfba1b48a94b400ffc3c734e96121f1e77b0a1ff38578e6c90#npm:5.3.0"],\
+            ["slash-create", "npm:5.4.1"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:0d3154367c58953967d01ca98fe0850cb7060cd4504298278449ee848b87bd218d3dfb495ae56cdfba1b48a94b400ffc3c734e96121f1e77b0a1ff38578e6c90#npm:5.4.1", {\
+          "packageLocation": "./.yarn/__virtual__/slash-create-virtual-7b0e6a4c52/0/cache/slash-create-npm-5.4.1-3d99dd3261-3de8fc57c7.zip/node_modules/slash-create/",\
+          "packageDependencies": [\
+            ["slash-create", "virtual:0d3154367c58953967d01ca98fe0850cb7060cd4504298278449ee848b87bd218d3dfb495ae56cdfba1b48a94b400ffc3c734e96121f1e77b0a1ff38578e6c90#npm:5.4.1"],\
             ["@types/express", null],\
             ["@types/fastify", null],\
             ["eventemitter3", "npm:4.0.7"],\
@@ -2394,7 +2401,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint-plugin-prettier", "virtual:0d3154367c58953967d01ca98fe0850cb7060cd4504298278449ee848b87bd218d3dfb495ae56cdfba1b48a94b400ffc3c734e96121f1e77b0a1ff38578e6c90#npm:4.0.0"],\
             ["fastify", "npm:3.27.4"],\
             ["prettier", "npm:2.6.1"],\
-            ["slash-create", "virtual:0d3154367c58953967d01ca98fe0850cb7060cd4504298278449ee848b87bd218d3dfb495ae56cdfba1b48a94b400ffc3c734e96121f1e77b0a1ff38578e6c90#npm:5.3.0"],\
+            ["slash-create", "virtual:0d3154367c58953967d01ca98fe0850cb7060cd4504298278449ee848b87bd218d3dfb495ae56cdfba1b48a94b400ffc3c734e96121f1e77b0a1ff38578e6c90#npm:5.4.1"],\
             ["slash-up", "npm:1.0.11"],\
             ["ts-node", "virtual:0d3154367c58953967d01ca98fe0850cb7060cd4504298278449ee848b87bd218d3dfb495ae56cdfba1b48a94b400ffc3c734e96121f1e77b0a1ff38578e6c90#npm:10.7.0"],\
             ["typescript", "patch:typescript@npm%3A4.6.3#~builtin<compat/typescript>::version=4.6.3&hash=bda367"]\

@@ -1767,7 +1767,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"slash-create@npm:^5.0.1, slash-create@npm:^5.3.0":
+"slash-create@npm:^5.0.1":
   version: 5.3.0
   resolution: "slash-create@npm:5.3.0"
   dependencies:
@@ -1783,6 +1783,25 @@ __metadata:
     fastify:
       optional: true
   checksum: 110774dba0e119b84be6933807a05495aa8d29e07c475557147b1511aec35fa9d4172e7889c07409e4c546b59d962b9230b45ebbfcd59a7c2f00ec0d243f5743
+  languageName: node
+  linkType: hard
+
+"slash-create@npm:^5.4.1":
+  version: 5.4.1
+  resolution: "slash-create@npm:5.4.1"
+  dependencies:
+    eventemitter3: ^4.0.7
+    lodash.isequal: ^4.5.0
+    tweetnacl: ^1.0.3
+  peerDependencies:
+    express: ^4.17.1
+    fastify: ^3.9.1
+  peerDependenciesMeta:
+    express:
+      optional: true
+    fastify:
+      optional: true
+  checksum: 3de8fc57c7450921a3d3f47f192441ce14d0bb0292f325d35e79d550736dc83e651b6125129dbed9d35ec43779ff73a50e64c499b93125d3cb7b35a7057c5cf4
   languageName: node
   linkType: hard
 
@@ -1876,7 +1895,7 @@ __metadata:
     eslint-plugin-prettier: ^4.0.0
     fastify: ^3.27.4
     prettier: ^2.6.1
-    slash-create: ^5.3.0
+    slash-create: ^5.4.1
     slash-up: ^1.0.11
     ts-node: ^10.7.0
     typescript: ^4.6.3
