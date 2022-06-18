@@ -6,7 +6,8 @@ import {
   TextInputStyle,
   CommandOptionType,
   MessageInteractionContext,
-  DiscordHTTPError
+  DiscordHTTPError,
+  Message
 } from 'slash-create';
 
 import { discord, EphemeralResponse } from '../util';
@@ -37,6 +38,11 @@ export default class SubmitCommand extends SlashCommand {
           type: CommandOptionType.ATTACHMENT,
           name: 'file',
           description: 'use this if you want to upload a file you have saved'
+        },
+        {
+          type: CommandOptionType.BOOLEAN,
+          name: 'with_comments',
+          description: 'enables comments (adds a thread) to your submission'
         }
       ]
     });
@@ -50,6 +56,7 @@ export default class SubmitCommand extends SlashCommand {
     let uris: string = '';
     let extra: string = undefined;
     const no_extra = Object.keys(ctx.options).length === 0;
+    const with_comments = ctx.options.with_comments;
 
     if (ctx.options.url) {
       const isUrl = ctx.options.url.match(/^https?:\/\/.+\..+$/g);
@@ -99,10 +106,21 @@ export default class SubmitCommand extends SlashCommand {
           return;
         }
         try {
-          await discord.createMessage(process.env.SUBMISSION_CHANNEL, {
+          const msg: Message = await discord.createMessage(process.env.SUBMISSION_CHANNEL, {
             content: this.CreateSubmissionMessage(ctx, `${mctx.values.descr.replace(/^\s+|\s+$/g, '')}\n${uris}`),
             allowedMentions: { parse: ['users'] }
           }); // todo make the channel non-static
+          if (with_comments) {
+            try {
+              await discord.createChannelMessageThread(process.env.SUBMISSION_CHANNEL, msg.id, {
+                name: 'Comments',
+                reason: 'comments requested',
+                autoArchiveDuration: 1440 // this is optional cakedan pls
+              });
+            } catch {
+              mctx.send(EphemeralResponse('Oh No! looks like something went wrong with adding comments to your post!'));
+            }
+          }
           mctx.send(EphemeralResponse(`Submission sent!\n${extra ?? ''}`));
         } catch (ex) {
           const error = ex as DiscordHTTPError;
