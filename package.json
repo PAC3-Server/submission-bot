@@ -28,7 +28,6 @@
     "detritus-client-rest": "^0.10.5",
     "dotenv": "^16.0.0",
     "fastify": "^3.27.4",
-    "slash-create": "^5.4.1",
-    "slash-up": "^1.0.11"
+    "slash-create": "^5.4.1"
   }
 }
