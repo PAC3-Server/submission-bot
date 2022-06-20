@@ -7,13 +7,20 @@ import {
   CommandOptionType,
   MessageInteractionContext,
   DiscordHTTPError,
-  Message
+  Message,
+  AttachmentData
 } from "slash-create";
 import { db } from "..";
+import fetch from "node-fetch";
 
 import { discord, EphemeralResponse } from "../util";
+import { RequestTypes } from "detritus-client-rest";
 
 const ALLOWED_MEDIA_TYPES = [
+  // todo set per server?
+  "audio/wav",
+  "audio/mp3",
+  "audio/ogg",
   "video/mp4",
   "video/mpeg",
   "video/webm",
@@ -62,7 +69,8 @@ export default class SubmitCommand extends SlashCommand {
       );
     let uris: string = "";
     let extra: string = "";
-    const no_extra = Object.keys(ctx.options).length === 0;
+    let data: Buffer;
+    let originalAttachment: AttachmentData;
     const with_comments = ctx.options.with_comments;
 
     if (ctx.options.url) {
@@ -73,22 +81,27 @@ export default class SubmitCommand extends SlashCommand {
 
     if (ctx.options.file) {
       // afaik you can only send one attachment atm?
-      const attachment = ctx.attachments.first();
-      if (!attachment) return EphemeralResponse("File missing???");
-      const size = attachment.size;
-      if (!attachment.content_type || !ALLOWED_MEDIA_TYPES.includes(attachment.content_type)) {
-        return EphemeralResponse(
-          `Invalid File format \`${
-            attachment.content_type
-          }\`, current accepted formats are:\`\`\`\n${ALLOWED_MEDIA_TYPES.join(
-            ", "
-          )}\`\`\`\nIf you think it should be supported contact \`Techbot#1448\` on Discord or \`Techbot121\` on [Github](https://github.com/PAC3-Server/submission-bot/issues/new)`
-        );
+      if (ctx.attachments.size > 0) {
+        const attachment: AttachmentData | undefined = ctx.attachments.first();
+        if (!attachment) return EphemeralResponse("File missing???");
+        const size = attachment.size;
+        if (!attachment.content_type || !ALLOWED_MEDIA_TYPES.includes(attachment.content_type)) {
+          return EphemeralResponse(
+            `Invalid File format \`${
+              attachment.content_type
+            }\`, current accepted formats are:\`\`\`\n${ALLOWED_MEDIA_TYPES.join(
+              ", "
+            )}\`\`\`\nIf you think it should be supported contact \`Techbot#1448\` on Discord or \`Techbot121\` on [Github](https://github.com/PAC3-Server/submission-bot/issues/new)`
+          );
+        }
+        if (size > 50000000) {
+          extra = "Your file was larger than 50mb, it might not embed!";
+        }
+        const res = await fetch(attachment.url);
+        if (!res.ok) EphemeralResponse("Something went wrong while downloading your file, please try again.");
+        data = await res.buffer();
+        originalAttachment = attachment;
       }
-      if (size > 50000000) {
-        extra = "Your file was larger than 50mb, it might not embed!";
-      }
-      uris += attachment.url;
     }
     ctx.sendModal(
       {
@@ -109,15 +122,22 @@ export default class SubmitCommand extends SlashCommand {
         ]
       },
       async (mctx) => {
-        if (no_extra && !mctx.values.descr.match(/https?:\/\/.+\..+/g)) {
+        if (!originalAttachment && !mctx.values.descr.match(/https?:\/\/.+\..+/g)) {
           mctx.send(EphemeralResponse("Please provide at least an URL!")); // todo: add a setting for this?
           return;
         }
         try {
-          const msg: Message = await discord.createMessage(channel, {
+          const options: RequestTypes.CreateMessage = {
             content: this.CreateSubmissionMessage(ctx, `${mctx.values.descr.replace(/^\s+|\s+$/g, "")}\n${uris}`),
             allowedMentions: { parse: ["users"] }
-          }); // todo make the channel non-static
+          };
+          if (ctx.options.file)
+            options.file = {
+              filename: originalAttachment.filename,
+              contentType: originalAttachment.content_type,
+              value: data
+            };
+          const msg: Message = await discord.createMessage(channel, options);
           if (with_comments) {
             try {
               await discord.createChannelMessageThread(channel, msg.id, {
