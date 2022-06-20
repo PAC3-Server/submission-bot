@@ -8,41 +8,42 @@ import {
   MessageInteractionContext,
   DiscordHTTPError,
   Message
-} from 'slash-create';
+} from "slash-create";
+import { db } from "..";
 
-import { discord, EphemeralResponse } from '../util';
+import { discord, EphemeralResponse } from "../util";
 
 const ALLOWED_MEDIA_TYPES = [
-  'video/mp4',
-  'video/mpeg',
-  'video/webm',
-  'image/jpeg',
-  'image/png',
-  'image/gif',
-  'image/webp'
+  "video/mp4",
+  "video/mpeg",
+  "video/webm",
+  "image/jpeg",
+  "image/png",
+  "image/gif",
+  "image/webp"
 ];
 
 export default class SubmitCommand extends SlashCommand {
   constructor(creator: SlashCreator) {
     super(creator, {
-      name: 'submit',
-      description: 'submits media to the showcase channel.',
+      name: "submit",
+      description: "submits media to the showcase channel.",
       deferEphemeral: true,
       options: [
         {
           type: CommandOptionType.STRING,
-          name: 'url',
-          description: 'url of your submission, for example a youtube link'
+          name: "url",
+          description: "url of your submission, for example a youtube link"
         },
         {
           type: CommandOptionType.ATTACHMENT,
-          name: 'file',
-          description: 'use this if you want to upload a file you have saved'
+          name: "file",
+          description: "use this if you want to upload a file you have saved"
         },
         {
           type: CommandOptionType.BOOLEAN,
-          name: 'with_comments',
-          description: 'enables comments (adds a thread) to your submission'
+          name: "with_comments",
+          description: "enables comments (adds a thread) to your submission"
         }
       ]
     });
@@ -53,48 +54,55 @@ export default class SubmitCommand extends SlashCommand {
   }
 
   async run(ctx: CommandContext) {
-    let uris: string = '';
-    let extra: string = undefined;
+    if (!ctx.guildID) return EphemeralResponse("This command doesn't work here...");
+    const channel = db.get(`sc_${ctx.guildID}`);
+    if (!db)
+      return EphemeralResponse(
+        "Oh No! looks like the Server Admins forgot to set the Submission Channel, tell them about this!"
+      );
+    let uris: string = "";
+    let extra: string = "";
     const no_extra = Object.keys(ctx.options).length === 0;
     const with_comments = ctx.options.with_comments;
 
     if (ctx.options.url) {
       const isUrl = ctx.options.url.match(/^https?:\/\/.+\..+$/g);
       if (!isUrl) return EphemeralResponse("This doesn't seem to be a valid URL...");
-      uris += ctx.options.url + '\n';
+      uris += ctx.options.url + "\n";
     }
 
     if (ctx.options.file) {
       // afaik you can only send one attachment atm?
       const attachment = ctx.attachments.first();
+      if (!attachment) return EphemeralResponse("File missing???");
       const size = attachment.size;
-      if (!ALLOWED_MEDIA_TYPES.includes(attachment.content_type)) {
+      if (!attachment.content_type || !ALLOWED_MEDIA_TYPES.includes(attachment.content_type)) {
         return EphemeralResponse(
           `Invalid File format \`${
             attachment.content_type
           }\`, current accepted formats are:\`\`\`\n${ALLOWED_MEDIA_TYPES.join(
-            ', '
+            ", "
           )}\`\`\`\nIf you think it should be supported contact \`Techbot#1448\` on Discord or \`Techbot121\` on [Github](https://github.com/PAC3-Server/submission-bot/issues/new)`
         );
       }
       if (size > 50000000) {
-        extra = 'Your file was larger than 50mb, it might not embed!';
+        extra = "Your file was larger than 50mb, it might not embed!";
       }
       uris += attachment.url;
     }
     ctx.sendModal(
       {
-        title: 'Showcase Submission',
+        title: "Showcase Submission",
         components: [
           {
             type: ComponentType.ACTION_ROW,
             components: [
               {
                 type: ComponentType.TEXT_INPUT,
-                label: 'Description',
+                label: "Description",
                 style: TextInputStyle.PARAGRAPH,
-                custom_id: 'descr',
-                placeholder: 'checkout my cool submission!'
+                custom_id: "descr",
+                placeholder: "checkout my cool submission!"
               }
             ]
           }
@@ -102,33 +110,33 @@ export default class SubmitCommand extends SlashCommand {
       },
       async (mctx) => {
         if (no_extra && !mctx.values.descr.match(/https?:\/\/.+\..+/g)) {
-          mctx.send(EphemeralResponse('Please provide at least an URL!')); // todo: add a setting for this?
+          mctx.send(EphemeralResponse("Please provide at least an URL!")); // todo: add a setting for this?
           return;
         }
         try {
-          const msg: Message = await discord.createMessage(process.env.SUBMISSION_CHANNEL, {
-            content: this.CreateSubmissionMessage(ctx, `${mctx.values.descr.replace(/^\s+|\s+$/g, '')}\n${uris}`),
-            allowedMentions: { parse: ['users'] }
+          const msg: Message = await discord.createMessage(channel, {
+            content: this.CreateSubmissionMessage(ctx, `${mctx.values.descr.replace(/^\s+|\s+$/g, "")}\n${uris}`),
+            allowedMentions: { parse: ["users"] }
           }); // todo make the channel non-static
           if (with_comments) {
             try {
-              await discord.createChannelMessageThread(process.env.SUBMISSION_CHANNEL, msg.id, {
-                name: 'Comments',
-                reason: 'comments requested',
+              await discord.createChannelMessageThread(channel, msg.id, {
+                name: "Comments",
+                reason: "comments requested",
                 autoArchiveDuration: 1440 // this is optional cakedan pls
               });
             } catch {
-              mctx.send(EphemeralResponse('Oh No! looks like something went wrong with adding comments to your post!'));
+              mctx.send(EphemeralResponse("Oh No! looks like something went wrong with adding comments to your post!"));
             }
           }
-          mctx.send(EphemeralResponse(`Submission sent!\n${extra ?? ''}`));
+          mctx.send(EphemeralResponse(`Submission sent!\n${extra ?? ""}`));
         } catch (ex) {
           const error = ex as DiscordHTTPError;
           switch (error.code) {
             case 10003:
               mctx.send(
                 EphemeralResponse(
-                  'Oh No! looks like the Server Admins forgot to set the Submission Channel, tell them about this!'
+                  "Oh No! looks like the Server Admins forgot to set the Submission Channel, tell them about this!"
                 )
               );
               break;
@@ -142,7 +150,7 @@ export default class SubmitCommand extends SlashCommand {
             default: {
               console.error(ex);
               mctx.send(
-                EphemeralResponse('Oh No! Something went wrong while sending your Submission, please try again.')
+                EphemeralResponse("Oh No! Something went wrong while sending your Submission, please try again.")
               );
             }
           }

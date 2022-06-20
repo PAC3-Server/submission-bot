@@ -4,11 +4,11 @@
     "module": "commonjs",
     "outDir": "dist",
     "lib": ["ES2020", "WebWorker"],
-    "strict": false,
     "preserveConstEnums": false,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
+    "strictNullChecks": true,
     "typeRoots": [
       "./node_modules/@types",
       "types"

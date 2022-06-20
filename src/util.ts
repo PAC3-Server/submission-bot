@@ -1,8 +1,9 @@
-import { CommandContext } from 'slash-create';
-import { Client } from 'detritus-client-rest';
-import { MessageOptions } from 'slash-create';
+import { CommandContext } from "slash-create";
+import { Client } from "detritus-client-rest";
+import { MessageOptions } from "slash-create";
+import { db } from ".";
 
-const client = new Client(process.env.DISCORD_BOT_TOKEN);
+const client = new Client(db.get("discord_bot_token"));
 export { client as discord };
 
 export const Permissions = {
@@ -11,7 +12,7 @@ export const Permissions = {
 };
 
 export function hasPermissions(ctx: CommandContext, permission: bigint): boolean {
-  if (!ctx.member) return; // member is not present in dm's
+  if (!ctx.member) return false; // member is not present in dm's
   const all_permissions = ctx.member.permissions.bitfield as bigint;
   return (all_permissions & permission) === permission;
 }

@@ -1,11 +1,11 @@
-import { SlashCommand, SlashCreator } from 'slash-create';
-import { EphemeralResponse } from '../util';
+import { SlashCommand, SlashCreator } from "slash-create";
+import { EphemeralResponse } from "../util";
 
 export default class HelpCommand extends SlashCommand {
   constructor(creator: SlashCreator) {
     super(creator, {
-      name: 'help',
-      description: 'displays information about the bot.',
+      name: "help",
+      description: "displays information about the bot.",
       deferEphemeral: true
     });
   }

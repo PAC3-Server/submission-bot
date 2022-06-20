@@ -661,13 +661,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dotenv@npm:^16.0.0":
-  version: 16.0.0
-  resolution: "dotenv@npm:16.0.0"
-  checksum: 664cebb51f0a9a1d1b930f51f0271e72e26d62feaecc9dc03df39453dd494b4e724809ca480fb3ec3213382b1ed3f791aaeb83569a137f9329ce58efd4853dbf
-  languageName: node
-  linkType: hard
-
 "escape-string-regexp@npm:^1.0.5":
   version: 1.0.5
   resolution: "escape-string-regexp@npm:1.0.5"
@@ -1621,6 +1614,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"simple-json-db@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "simple-json-db@npm:2.0.0"
+  checksum: 004c0ef9e068ae7585ed13332c9a99169ae376d407a60325073dd7e5aae9016de602228950ee71c1ad2f5e700b759eebac5f56260c8ab9f357b1044f69b682fe
+  languageName: node
+  linkType: hard
+
 "slash-create@npm:^5.4.1":
   version: 5.4.1
   resolution: "slash-create@npm:5.4.1"
@@ -1692,12 +1692,12 @@ __metadata:
     "@typescript-eslint/parser": ^5.16.0
     cat-loggr: ^1.2.2
     detritus-client-rest: ^0.10.5
-    dotenv: ^16.0.0
     eslint: ^8.11.0
     eslint-config-prettier: ^8.5.0
     eslint-plugin-prettier: ^4.0.0
     fastify: ^3.27.4
     prettier: ^2.6.1
+    simple-json-db: ^2.0.0
     slash-create: ^5.4.1
     ts-node: ^10.7.0
     typescript: ^4.6.3

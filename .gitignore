@@ -21,3 +21,4 @@ logs/
 !.vscode/extensions.json
 .env
 dist/
+storage.json
