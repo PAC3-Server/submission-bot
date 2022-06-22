@@ -141,7 +141,7 @@ export default class SubmitCommand extends SlashCommand {
           if (with_comments) {
             try {
               await discord.createChannelMessageThread(channel, msg.id, {
-                name: "Comments",
+                name: `Comments for submission from ${mctx.user.mention}`,
                 reason: "comments requested",
                 autoArchiveDuration: 1440 // this is optional cakedan pls
               });
