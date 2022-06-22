@@ -48,6 +48,7 @@ export default class RemoveCommand extends SlashCommand {
           case DiscordAbortCodes.UNKNOWN_MESSAGE:
             return EphemeralResponse("Could not find a message with that ID...");
           case DiscordAbortCodes.INVALID_PERMISSIONS:
+          case DiscordAbortCodes.INVALID_ACCESS:
             return EphemeralResponse("Sorry, I don't have enough permissions to remove that message.");
           default: {
             console.error(ex);

@@ -161,6 +161,7 @@ export default class SubmitCommand extends SlashCommand {
               );
               break;
             case 50013:
+            case 50001:
               mctx.send(
                 EphemeralResponse(
                   "Oh No! looks like I can't send messages to the Submission Channel, tell the Server Admins about this!"
