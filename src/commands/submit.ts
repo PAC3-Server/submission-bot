@@ -122,7 +122,7 @@ export default class SubmitCommand extends SlashCommand {
         ]
       },
       async (mctx) => {
-        if (!originalAttachment && !mctx.values.descr.match(/https?:\/\/.+\..+/g)) {
+        if (!originalAttachment && !uris) {
           mctx.send(EphemeralResponse("Please provide at least an URL!")); // todo: add a setting for this?
           return;
         }
