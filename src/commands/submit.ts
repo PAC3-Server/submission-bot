@@ -63,12 +63,12 @@ export default class SubmitCommand extends SlashCommand {
   async run(ctx: CommandContext) {
     if (!ctx.guildID) return EphemeralResponse("This command doesn't work here...");
     const channel = db.get(`sc_${ctx.guildID}`);
+    const guild = await discord.fetchGuild(ctx.guildID);
     if (!db)
       return EphemeralResponse(
         "Oh No! looks like the Server Admins forgot to set the Submission Channel, tell them about this!"
       );
     let uris: string = "";
-    let extra: string = "";
     let data: Buffer;
     let originalAttachment: AttachmentData;
     const with_comments = ctx.options.with_comments;
@@ -84,7 +84,8 @@ export default class SubmitCommand extends SlashCommand {
       if (ctx.attachments.size > 0) {
         const attachment: AttachmentData | undefined = ctx.attachments.first();
         if (!attachment) return EphemeralResponse("File missing???");
-        const size = attachment.size;
+        const size = attachment.size / 1024 ** 2;
+        const allowed_size = guild ? (guild.premium_tier === 2 ? 50 : guild.premium_tier === 3 ? 100 : 8) : 8;
         if (!attachment.content_type || !ALLOWED_MEDIA_TYPES.includes(attachment.content_type)) {
           return EphemeralResponse(
             `Invalid File format \`${
@@ -94,8 +95,8 @@ export default class SubmitCommand extends SlashCommand {
             )}\`\`\`\nIf you think it should be supported contact \`Techbot#1448\` on Discord or \`Techbot121\` on [Github](https://github.com/PAC3-Server/submission-bot/issues/new)`
           );
         }
-        if (size > 50000000) {
-          extra = "Your file was larger than 50mb, it might not embed!";
+        if (size > allowed_size) {
+          return EphemeralResponse(`Your file was larger than ${allowed_size}mb, try sending a link instead.`);
         }
         const res = await fetch(attachment.url);
         if (!res.ok) EphemeralResponse("Something went wrong while downloading your file, please try again.");
@@ -149,7 +150,7 @@ export default class SubmitCommand extends SlashCommand {
               mctx.send(EphemeralResponse("Oh No! looks like something went wrong with adding comments to your post!"));
             }
           }
-          mctx.send(EphemeralResponse(`Submission sent!\n${extra ?? ""}`));
+          mctx.send(EphemeralResponse(`Submission sent!`));
         } catch (ex) {
           const error = ex as DiscordHTTPError;
           switch (error.code) {
@@ -159,6 +160,9 @@ export default class SubmitCommand extends SlashCommand {
                   "Oh No! looks like the Server Admins forgot to set the Submission Channel, tell them about this!"
                 )
               );
+              break;
+            case 40005:
+              mctx.send(EphemeralResponse("Oh No! Discord said the file you uploaded was too big!"));
               break;
             case 50013:
             case 50001:
