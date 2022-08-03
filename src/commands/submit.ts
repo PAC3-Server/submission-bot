@@ -21,6 +21,7 @@ const ALLOWED_MEDIA_TYPES = [
   "audio/wav",
   "audio/mp3",
   "audio/ogg",
+  "audio/flac",
   "video/mp4",
   "video/mpeg",
   "video/webm",
