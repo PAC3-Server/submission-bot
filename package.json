@@ -24,9 +24,9 @@
   "dependencies": {
     "cat-loggr": "^1.2.2",
     "detritus-client-rest": "^0.10.5",
-    "fastify": "^3.29.0",
-    "node-fetch": "2.6.1",
+    "fastify": "^4.8.1",
+    "node-fetch": "^3.2.10",
     "simple-json-db": "^2.0.0",
-    "slash-create": "^5.6.1"
+    "slash-create": "^5.9.0"
   }
 }
