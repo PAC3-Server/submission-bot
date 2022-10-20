@@ -180,11 +180,11 @@ export default class SubmitCommand extends SlashCommand {
           ]
         },
         async (mctx) => {
-          mctx.send(await this.SendSubmission(mctx, mctx.values.descr, uris, data, file));
+          mctx.send(await this.SendSubmission(mctx, mctx.values.descr, uris, data, file, ctx.options.with_comments));
         }
       );
     } else {
-      return await this.SendSubmission(ctx, description, uris, data, file);
+      return await this.SendSubmission(ctx, description, uris, data, file, ctx.options.with_comments);
     }
   }
 }

@@ -4,39 +4,39 @@ module.exports = {
     es6: true,
     node: true
   },
-  extends: ['eslint:recommended', 'plugin:prettier/recommended'],
+  extends: ["eslint:recommended", "plugin:prettier/recommended"],
   globals: {
     NodeJS: true,
     BigInt: true
   },
-  parser: '@typescript-eslint/parser',
+  parser: "@typescript-eslint/parser",
   parserOptions: {
     ecmaVersion: 6,
-    sourceType: 'module'
+    sourceType: "module"
   },
-  plugins: ['@typescript-eslint'],
+  plugins: ["@typescript-eslint"],
   rules: {
-    'prettier/prettier': 'warn',
-    'no-cond-assign': [2, 'except-parens'],
-    'no-unused-vars': 0,
-    '@typescript-eslint/no-unused-vars': 1,
-    'no-empty': [
-      'error',
+    "prettier/prettier": "warn",
+    "no-cond-assign": [2, "except-parens"],
+    "no-unused-vars": 0,
+    "@typescript-eslint/no-unused-vars": 1,
+    "no-empty": [
+      "error",
       {
         allowEmptyCatch: true
       }
     ],
-    'prefer-const': [
-      'warn',
+    "prefer-const": [
+      "warn",
       {
-        destructuring: 'all'
+        destructuring: "all"
       }
     ],
-    'spaced-comment': 'warn'
+    "spaced-comment": "warn"
   },
   overrides: [
     {
-      files: ['slash-up.config.js'],
+      files: ["slash-up.config.js"],
       env: {
         node: true
       }
