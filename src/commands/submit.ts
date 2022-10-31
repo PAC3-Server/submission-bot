@@ -55,8 +55,8 @@ export default class SubmitCommand extends SlashCommand {
         },
         {
           type: CommandOptionType.BOOLEAN,
-          name: "with_comments",
-          description: "enables comments (adds a thread) to your submission"
+          name: "disable_comments",
+          description: "disable comments on your submission"
         }
       ]
     });
@@ -71,7 +71,7 @@ export default class SubmitCommand extends SlashCommand {
     description?: string,
     data?: AttachmentData,
     file?: ArrayBuffer,
-    with_comments?: boolean
+    disable_comments?: boolean
   ): Promise<MessageOptions> {
     if (!ctx.deferred) await ctx.defer(true);
     const channel = db.get(`sc_${ctx.guildID}`);
@@ -91,11 +91,10 @@ export default class SubmitCommand extends SlashCommand {
 
     try {
       const msg: Message = await discord.createMessage(channel, options);
-      if (with_comments) {
+      if (!disable_comments) {
         try {
           await discord.createChannelMessageThread(channel, msg.id, {
             name: `Comments for submission from ${ctx.user.username}`,
-            reason: "comments requested",
             autoArchiveDuration: 1440 // this is optional cakedan pls
           });
         } catch {
@@ -180,11 +179,11 @@ export default class SubmitCommand extends SlashCommand {
           ]
         },
         async (mctx) => {
-          mctx.send(await this.SendSubmission(mctx, mctx.values.descr, uris, data, file, ctx.options.with_comments));
+          mctx.send(await this.SendSubmission(mctx, mctx.values.descr, uris, data, file, ctx.options.disable_comments));
         }
       );
     } else {
-      return await this.SendSubmission(ctx, description, uris, data, file, ctx.options.with_comments);
+      return await this.SendSubmission(ctx, description, uris, data, file, ctx.options.disable_comments);
     }
   }
 }
