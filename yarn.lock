@@ -1779,22 +1779,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"slash-create@npm:^5.9.0":
-  version: 5.9.0
-  resolution: "slash-create@npm:5.9.0"
+"slash-create@npm:^5.10.0":
+  version: 5.10.0
+  resolution: "slash-create@npm:5.10.0"
   dependencies:
     eventemitter3: ^4.0.7
     lodash.isequal: ^4.5.0
     tweetnacl: ^1.0.3
   peerDependencies:
-    express: ^4.17.1
-    fastify: ^3.9.1
+    express: ^4
+    fastify: ^3 || ^4
   peerDependenciesMeta:
     express:
       optional: true
     fastify:
       optional: true
-  checksum: 8e4462e301499b0f65be84fcbb7d41300b4a5fa400a99da0415a177d616a8277a06e921c197ba245fe52c434437057da073ffe48443ad03a77c29b585509aeea
+  checksum: 24057f8f136ea1d87ebbbc58ee7a2a7f3d946d40456b6b3807f264120532d356f50bd3df2e7738306011e16f04c84eadea35a7810b99d1f8443363b68b4d6294
   languageName: node
   linkType: hard
 
@@ -1855,7 +1855,7 @@ __metadata:
     fastify: ^4.8.1
     prettier: ^2.7.1
     simple-json-db: ^2.0.0
-    slash-create: ^5.9.0
+    slash-create: ^5.10.0
     ts-node: ^10.8.1
     typescript: ^4.7.4
   languageName: unknown

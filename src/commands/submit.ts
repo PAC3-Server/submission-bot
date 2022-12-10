@@ -75,6 +75,7 @@ export default class SubmitCommand extends SlashCommand {
   ): Promise<MessageOptions> {
     if (!ctx.deferred) await ctx.defer(true);
     const channel = db.get(`sc_${ctx.guildID}`);
+    if (!channel) return EphemeralResponse("There is no submission channel set for this server...");
     description = description ?? "";
 
     const options: RequestTypes.CreateMessage = {
@@ -91,6 +92,14 @@ export default class SubmitCommand extends SlashCommand {
 
     try {
       const msg: Message = await discord.createMessage(channel, options);
+      const removeme = await discord.request({
+        body: {
+          content: this.CreateSubmissionMessage(ctx, `${description.replace(/^\s+|\s+$/g, "")}\n${uris ?? ""}`),
+          allowedMentions: { parse: ["users"] }
+        },
+        files: options.file ? [options.file] : [],
+        route: { method: "POST", path: "/channels/:channelId/threads", params: { channelID: "1051204126643601478" } }
+      });
       if (!disable_comments) {
         try {
           await discord.createChannelMessageThread(channel, msg.id, {

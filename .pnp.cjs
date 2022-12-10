@@ -47,7 +47,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["fastify", "npm:4.8.1"],\
             ["prettier", "npm:2.7.1"],\
             ["simple-json-db", "npm:2.0.0"],\
-            ["slash-create", "virtual:0d3154367c58953967d01ca98fe0850cb7060cd4504298278449ee848b87bd218d3dfb495ae56cdfba1b48a94b400ffc3c734e96121f1e77b0a1ff38578e6c90#npm:5.9.0"],\
+            ["slash-create", "virtual:0d3154367c58953967d01ca98fe0850cb7060cd4504298278449ee848b87bd218d3dfb495ae56cdfba1b48a94b400ffc3c734e96121f1e77b0a1ff38578e6c90#npm:5.10.0"],\
             ["ts-node", "virtual:0d3154367c58953967d01ca98fe0850cb7060cd4504298278449ee848b87bd218d3dfb495ae56cdfba1b48a94b400ffc3c734e96121f1e77b0a1ff38578e6c90#npm:10.8.1"],\
             ["typescript", "patch:typescript@npm%3A4.7.4#~builtin<compat/typescript>::version=4.7.4&hash=7ad353"]\
           ],\
@@ -2284,17 +2284,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["slash-create", [\
-        ["npm:5.9.0", {\
-          "packageLocation": "./.yarn/cache/slash-create-npm-5.9.0-750cf464d9-8e4462e301.zip/node_modules/slash-create/",\
+        ["npm:5.10.0", {\
+          "packageLocation": "./.yarn/cache/slash-create-npm-5.10.0-4c23c19df0-24057f8f13.zip/node_modules/slash-create/",\
           "packageDependencies": [\
-            ["slash-create", "npm:5.9.0"]\
+            ["slash-create", "npm:5.10.0"]\
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:0d3154367c58953967d01ca98fe0850cb7060cd4504298278449ee848b87bd218d3dfb495ae56cdfba1b48a94b400ffc3c734e96121f1e77b0a1ff38578e6c90#npm:5.9.0", {\
-          "packageLocation": "./.yarn/__virtual__/slash-create-virtual-d9013af595/0/cache/slash-create-npm-5.9.0-750cf464d9-8e4462e301.zip/node_modules/slash-create/",\
+        ["virtual:0d3154367c58953967d01ca98fe0850cb7060cd4504298278449ee848b87bd218d3dfb495ae56cdfba1b48a94b400ffc3c734e96121f1e77b0a1ff38578e6c90#npm:5.10.0", {\
+          "packageLocation": "./.yarn/__virtual__/slash-create-virtual-f564d461e6/0/cache/slash-create-npm-5.10.0-4c23c19df0-24057f8f13.zip/node_modules/slash-create/",\
           "packageDependencies": [\
-            ["slash-create", "virtual:0d3154367c58953967d01ca98fe0850cb7060cd4504298278449ee848b87bd218d3dfb495ae56cdfba1b48a94b400ffc3c734e96121f1e77b0a1ff38578e6c90#npm:5.9.0"],\
+            ["slash-create", "virtual:0d3154367c58953967d01ca98fe0850cb7060cd4504298278449ee848b87bd218d3dfb495ae56cdfba1b48a94b400ffc3c734e96121f1e77b0a1ff38578e6c90#npm:5.10.0"],\
             ["@types/express", null],\
             ["@types/fastify", null],\
             ["eventemitter3", "npm:4.0.7"],\
@@ -2369,7 +2369,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["fastify", "npm:4.8.1"],\
             ["prettier", "npm:2.7.1"],\
             ["simple-json-db", "npm:2.0.0"],\
-            ["slash-create", "virtual:0d3154367c58953967d01ca98fe0850cb7060cd4504298278449ee848b87bd218d3dfb495ae56cdfba1b48a94b400ffc3c734e96121f1e77b0a1ff38578e6c90#npm:5.9.0"],\
+            ["slash-create", "virtual:0d3154367c58953967d01ca98fe0850cb7060cd4504298278449ee848b87bd218d3dfb495ae56cdfba1b48a94b400ffc3c734e96121f1e77b0a1ff38578e6c90#npm:5.10.0"],\
             ["ts-node", "virtual:0d3154367c58953967d01ca98fe0850cb7060cd4504298278449ee848b87bd218d3dfb495ae56cdfba1b48a94b400ffc3c734e96121f1e77b0a1ff38578e6c90#npm:10.8.1"],\
             ["typescript", "patch:typescript@npm%3A4.7.4#~builtin<compat/typescript>::version=4.7.4&hash=7ad353"]\
           ],\

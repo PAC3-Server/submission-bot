@@ -26,6 +26,6 @@
     "detritus-client-rest": "^0.10.5",
     "fastify": "^4.8.1",
     "simple-json-db": "^2.0.0",
-    "slash-create": "^5.9.0"
+    "slash-create": "^5.10.0"
   }
 }
