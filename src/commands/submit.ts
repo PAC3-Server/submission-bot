@@ -95,13 +95,13 @@ export default class SubmitCommand extends SlashCommand {
       try {
         const removeme = await discord.request({
           body: {
-            name: this.CreateSubmissionMessage(ctx, description.replace(/^\s+|\s+$/g, "")),
+            name: `New Submission from ${ctx.user.username}:\n${description.replace(/^\s+|\s+$/g, "")}`,
             message: {
               content: uris ?? "",
-              allowedMentions: { parse: ["users"] },
-              files: options.file ? [options.file] : undefined
+              allowedMentions: { parse: ["users"] }
             }
           },
+          files: options.file ? [options.file] : undefined,
           route: { method: "POST", path: "/channels/:channelId/threads", params: { channelId: "1051204126643601478" } }
         });
       } catch (e) {
